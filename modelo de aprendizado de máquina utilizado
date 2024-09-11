@@ -1,0 +1,20 @@
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+# Treinando o modelo
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Fazendo previsões
+y_pred = model.predict(X_test)
+
+# Avaliando o desempenho do modelo
+print(f'Acurácia: {accuracy_score(y_test, y_pred):.4f}')
+print("\nRelatório de Classificação:")
+print(classification_report(y_test, y_pred))
+
+# Matriz de Confusão
+cm = confusion_matrix(y_test, y_pred)
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+plt.title('Matriz de Confusão')
+plt.show()
