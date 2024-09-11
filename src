@@ -1,0 +1,53 @@
+# Previsão de Infecção pelo Vírus da AIDS
+
+## Descrição do Problema
+Este projeto desenvolve um modelo de machine learning para prever se um paciente está infectado pelo vírus da AIDS com base em características de saúde e histórico médico.
+
+## Conjunto de Dados
+Os dados estão disponíveis em quatro arquivos CSV com diferentes tamanhos, permitindo uma análise de desempenho do modelo com diferentes volumes de dados:
+- AIDS_Classification.csv
+- AIDS_Classification_5000.csv
+- AIDS_Classification_15000.csv
+- AIDS_Classification_50000.csv
+
+## Atributos dos Dados
+Os atributos incluem:
+- Idade
+- Peso
+- Histórico médico (hemofilia, uso de drogas intravenosas, etc.)
+- Contagens de células CD4/CD8
+- Indicador de tratamento
+- Gênero, Raça, entre outros.
+
+## Modelos Utilizados
+O modelo principal utilizado foi o **Random Forest**, que apresentou um bom desempenho em termos de acurácia e capacidade de discriminar entre classes infectadas e não infectadas.
+
+## Métricas de Avaliação
+As métricas utilizadas foram:
+- Acurácia
+- Sensibilidade
+- Especificidade
+- Precisão
+- F1-Score
+
+## Requisitos
+- Python 3.7+
+- Pandas
+- Numpy
+- Scikit-learn
+- Matplotlib
+- Seaborn
+
+## Como Usar
+1. Clone este repositório.
+2. Instale os pacotes necessários: `pip install -r requirements.txt`
+3. Execute o script principal: `python main.py`
+
+## Resultados
+Os resultados mostraram que o modelo de Random Forest foi eficaz em prever a infecção pelo vírus da AIDS com uma acurácia superior a X%. A matriz de confusão e a curva ROC indicam uma boa separação das classes.
+
+## Contribuições
+Contribuições são bem-vindas! Se você tem sugestões de melhorias ou deseja colaborar, sinta-se à vontade para abrir um _pull request_.
+
+## Licença
+Este projeto está licenciado sob a MIT License.
