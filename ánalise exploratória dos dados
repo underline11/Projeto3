@@ -1,0 +1,21 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Carregar o conjunto de dados
+data = pd.read_csv('AIDS_Classification.csv')
+
+# Informações básicas sobre o conjunto de dados
+print(data.info())
+print(data.describe())
+
+# Visualizar a distribuição de pacientes infectados e não infectados
+sns.countplot(x='infected', data=data)
+plt.title('Distribuição de Pacientes Infectados e Não Infectados')
+plt.show()
+
+# Histograma para analisar as distribuições de algumas variáveis importantes
+plt.figure(figsize=(12,6))
+sns.histplot(data['idade'], kde=True)
+plt.title('Distribuição de Idade')
+plt.show()
