@@ -1,53 +1,84 @@
-# Previsão de Infecção pelo Vírus da AIDS
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import requests
+from io import StringIO
+import random
 
-## Descrição do Problema
-Este projeto desenvolve um modelo de machine learning para prever se um paciente está infectado pelo vírus da AIDS com base em características de saúde e histórico médico.
+def carregar_dados(url, tipo_arquivo='CSV'):
+    try:
+        if 'drive.google.com' in url:
+            # Extrair ID do arquivo do URL do Google Drive
+            file_id = url.split('/')[-2]
+            # Construir URL de download
+            download_url = f"https://drive.google.com/uc?id={file_id}"
+            # Fazer o download do conteúdo do arquivo
+            response = requests.get(download_url).content
+            # Ler os dados a partir do conteúdo baixado
+            df = pd.read_csv(StringIO(response.decode('utf-8')))
+        else:
+            df = pd.read_csv(url)
+        return df
+    except Exception as e:
+        print(f"Erro ao carregar os dados: {e}")
+        return None
 
-## Conjunto de Dados
-Os dados estão disponíveis em quatro arquivos CSV com diferentes tamanhos, permitindo uma análise de desempenho do modelo com diferentes volumes de dados:
-- AIDS_Classification.csv
-- AIDS_Classification_5000.csv
-- AIDS_Classification_15000.csv
-- AIDS_Classification_50000.csv
+def analise_exploratoria(df):
+    print("Primeiras linhas do DataFrame:")
+    print(df.head())
+    
+    print("\nInformações sobre o DataFrame:")
+    print(df.info())
+    
+    print("\nEstatísticas descritivas das variáveis numéricas:")
+    print(df.describe())
+    
+    # Plotar histograma
+    plot_histograma(df)
+    
+    
+    
+   
 
-## Atributos dos Dados
-Os atributos incluem:
-- Idade
-- Peso
-- Histórico médico (hemofilia, uso de drogas intravenosas, etc.)
-- Contagens de células CD4/CD8
-- Indicador de tratamento
-- Gênero, Raça, entre outros.
+def plot_histograma(df):
+    print("\nHistograma:")
+    numeric_columns = df.select_dtypes(include=['float64', 'int64']).columns
+    if len(numeric_columns) > 0:
+        sns.histplot(data=df, x=random.choice(numeric_columns), kde=True)
+        plt.title('Histograma')
+        plt.show()
+    else:
+        print("Não há variáveis numéricas para plotar o histograma.")
 
-## Modelos Utilizados
-O modelo principal utilizado foi o **Random Forest**, que apresentou um bom desempenho em termos de acurácia e capacidade de discriminar entre classes infectadas e não infectadas.
 
-## Métricas de Avaliação
-As métricas utilizadas foram:
-- Acurácia
-- Sensibilidade
-- Especificidade
-- Precisão
-- F1-Score
 
-## Requisitos
-- Python 3.7+
-- Pandas
-- Numpy
-- Scikit-learn
-- Matplotlib
-- Seaborn
 
-## Como Usar
-1. Clone este repositório.
-2. Instale os pacotes necessários: `pip install -r requirements.txt`
-3. Execute o script principal: `python main.py`
+def analise_especialista():
+    # Aqui você pode adicionar sua análise especializada
+    print("\nAnálise especializada:")
+    print("Essa é a análise especializada do assunto.")
+    print("Você pode adicionar suas próprias conclusões e insights aqui.")
 
-## Resultados
-Os resultados mostraram que o modelo de Random Forest foi eficaz em prever a infecção pelo vírus da AIDS com uma acurácia superior a X%. A matriz de confusão e a curva ROC indicam uma boa separação das classes.
+def main(urls):
+    for url in urls:
+        df = carregar_dados(url)
+        if df is not None:
+            print("\nAnálise exploratória para o arquivo:", url)
+            analise_exploratoria(df)
+            print("\n---")
 
-## Contribuições
-Contribuições são bem-vindas! Se você tem sugestões de melhorias ou deseja colaborar, sinta-se à vontade para abrir um _pull request_.
+    # Após a análise exploratória, realizamos uma análise especializada
+    analise_especialista()
 
-## Licença
-Este projeto está licenciado sob a MIT License.
+# URLs dos arquivos de dados
+urls = [
+    "https://drive.google.com/file/d/1Z-asiPD9n5-oJhSsWNo9sea_ylueVK2B/view?usp=drive_link",
+    "https://drive.google.com/file/d/1Hijfi4kEkXJPw55Rzh4BpBpnV3Mwjkt_/view?usp=drive_link",
+    "https://drive.google.com/file/d/1DaMedDAW0ZMYnMfjk0xw8ebkQUxxEJzL/view?usp=drive_link",
+    "https://drive.google.com/file/d/1DaMedDAW0ZMYnMfjk0xw8ebkQUxxEJzL/view?usp=drive_link"
+   
+    # Adicione mais URLs aqui...
+]
+
+# Executar a análise de dados
+main(urls)
